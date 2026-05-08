@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #eee; display: flex; justify-content: center; padding: 20px; }
+    canvas { box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+    button { display: block; margin: 16px auto; padding: 10px 24px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div>
+    <canvas id="c" width="1200" height="630"></canvas>
+    <button onclick="download()">ogp.jpg としてダウンロード</button>
+  </div>
+  <script>
+    const c = document.getElementById('c');
+    const ctx = c.getContext('2d');
+
+    // Background gradient
+    const grad = ctx.createLinearGradient(0, 0, 1200, 630);
+    grad.addColorStop(0, '#0f172a');
+    grad.addColorStop(0.5, '#1a2744');
+    grad.addColorStop(1, '#0d3b2e');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 1200, 630);
+
+    // Grid dots
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    for (let x = 0; x < 1200; x += 32) {
+      for (let y = 0; y < 630; y += 32) {
+        ctx.beginPath();
+        ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Accent bar
+    const accentGrad = ctx.createLinearGradient(60, 0, 400, 0);
+    accentGrad.addColorStop(0, '#059669');
+    accentGrad.addColorStop(1, '#0d9488');
+    ctx.fillStyle = accentGrad;
+    ctx.fillRect(60, 60, 180, 6);
+
+    // Badge
+    ctx.fillStyle = '#059669';
+    ctx.beginPath();
+    ctx.roundRect(60, 85, 320, 36, 18);
+    ctx.fill();
+
+    // Wait for font load
+    document.fonts.ready.then(() => {
+      ctx.fillStyle = 'white';
+      ctx.font = '700 16px "Noto Sans JP"';
+      ctx.fillText('PRプロ × AIエンジニア 共同開発', 80, 109);
+
+      // Main title
+      ctx.fillStyle = 'white';
+      ctx.font = '900 72px "Noto Sans JP"';
+      ctx.fillText('社長の「声」を、', 60, 210);
+
+      ctx.fillStyle = '#34d399';
+      ctx.font = '900 72px "Noto Sans JP"';
+      ctx.fillText('AIの分身', 60, 295);
+
+      ctx.fillStyle = 'white';
+      ctx.font = '900 72px "Noto Sans JP"';
+      ctx.fillText('が発信し続ける。', 60, 380);
+
+      // Subtitle
+      ctx.fillStyle = 'rgba(255,255,255,0.75)';
+      ctx.font = '500 26px "Noto Sans JP"';
+      ctx.fillText('3か月の広報自動化プログラム', 60, 440);
+
+      // Bottom tag
+      ctx.fillStyle = 'rgba(255,255,255,0.15)';
+      ctx.beginPath();
+      ctx.roundRect(60, 490, 1080, 2, 1);
+      ctx.fill();
+
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.font = '400 22px "Noto Sans JP"';
+      ctx.fillText('月100万円の広報伴走を、その数分の一で。', 60, 540);
+
+      // Right side decoration
+      ctx.strokeStyle = 'rgba(52,211,153,0.3)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(820, 80, 320, 440, 24);
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(52,211,153,0.08)';
+      ctx.beginPath();
+      ctx.roundRect(820, 80, 320, 440, 24);
+      ctx.fill();
+
+      ctx.fillStyle = '#34d399';
+      ctx.font = '700 20px "Noto Sans JP"';
+      ctx.textAlign = 'center';
+      ctx.fillText('✍️  note 1日1投稿', 980, 160);
+      ctx.fillText('🔄  SNS自動展開', 980, 220);
+      ctx.fillText('🖼️  画像も自動生成', 980, 280);
+      ctx.fillText('🎯  AI感ゼロの編集術', 980, 340);
+      ctx.fillText('📊  効果を数字で可視化', 980, 400);
+
+      ctx.textAlign = 'left';
+    });
+
+    function download() {
+      const link = document.createElement('a');
+      link.download = 'ogp.jpg';
+      link.href = c.toDataURL('image/jpeg', 0.95);
+      link.click();
+    }
+  </script>
+</body>
+</html>
