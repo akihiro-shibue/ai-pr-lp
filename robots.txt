@@ -1,7 +1,5 @@
 User-agent: *
-Allow: /
+Disallow:
 
 User-agent: facebookexternalhit
-Allow: /
-
-Sitemap: https://ai-pr-lp.com/sitemap.xml
+Disallow:
